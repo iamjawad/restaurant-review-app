@@ -1,0 +1,179 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.sidebar{
+  background-color: white;
+  border: 2px solid #c4c4c4;
+  position: fixed;
+  width: 25%;
+  height: 100%;
+  top: 0;
+  opacity: .9;
+  right: 0px;
+}
+
+.sidebar .title{
+  padding: 20px;
+  background-color: #f3f1f1;
+  color: #737373;
+}
+
+.sidebar .restaurant .contents{
+  padding: 8px;
+  position: relative;
+  border-bottom: 0.5px solid #f0ebeb;
+}
+
+.sidebar .restaurant .contents .show-details{
+  text-decoration: none;
+  color: #939595;
+}
+
+.sidebar .restaurant .contents .basic-info{
+  padding: 8px 20px;
+  border-radius: 5px;
+}
+
+.sidebar .restaurant .contents .detail-info{
+  padding: 8px 20px;
+}
+
+.sidebar .restaurant .contents .basic-info span > svg, .rating-input-box{
+  color: #ffa100;
+  font-size: 15px;
+}
+
+.sidebar .restaurant .contents .basic-info .res-name{
+  color: #05a405;
+  margin-bottom: 5px;
+}
+
+
+.sidebar .restaurant .contents .basic-info .res-address{
+  font-size: 14px;
+  color: #8f8d8d;
+}
+
+.sidebar .restaurant .contents .basic-info .avg-stars{
+  margin: 0 10px;
+}
+
+.sidebar .rest-filter{
+  padding: 8px 28px;
+  background-color: #f0f0f0;
+}
+
+.sidebar .rest-filter .rating-filter{
+  color:#f29d0c;
+  padding-right: 5px;
+}
+
+.sidebar .rest-filter .to-range{
+  color: #696969;
+  margin: 0 8px;
+}
+
+
+.sidebar .restaurant .contents .basic-info .caret{
+  position: absolute;
+  top: 35px;
+  right: 30px;
+  font-size: 25px;
+  color: #727272;
+}
+.reviews-box{
+  margin: 20px 0;
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.reviews-box .user-name{
+  font-style: italic;
+  margin-bottom: 5px;
+  color: #484848;
+  text-decoration: underline;
+}
+
+.reviews-box .user-rating{
+  color: #f29d0c;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.reviews-box .user-rating .stars-count{
+  margin-right: 5px;
+}
+
+
+
+.reviews-box .user-review{
+  color: #939595;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-style: italic;
+}
+
+.detail-info .section-title{
+  color: #373737;
+}
+
+.detail-info .rating-input-box{
+  margin-bottom: 8px;
+}
+
+.detail-info hr{
+  color:white;
+}
+
+.new-review-box{
+
+}
+
+.new-review-box .actions{
+  margin: 10px 0;
+}
+
+.new-review-box textarea {
+  width: 100%;
+}
+
+.new-review-box .actions button{
+  margin-right: 5px;
+}
+
+.c-button{
+  padding: 8px 15px;
+  background-color: #fff;
+  border: 2px solid #eee;
+  border-radius: 5px;
+  color: #888;
+}
+
+.c-button:hover{
+  background-color: rgba(249, 249, 249, 0.98);
+}
+
+.c-button:active{
+  background-color: rgba(235, 235, 235, 0.98);
+}
+
+.restaurants{
+  overflow: scroll;
+  height: 900px;
+}
+
+
+
+
+
+
