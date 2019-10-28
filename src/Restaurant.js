@@ -69,7 +69,9 @@ class Restaurant extends React.Component {
         }
             
         );
-        return (avgRating / reviews).toFixed(2);
+
+        const totalRating = (avgRating / reviews).toFixed(2);
+        return isNaN(totalRating) ? 0 : totalRating;
     }
 
     getStars(rating) {

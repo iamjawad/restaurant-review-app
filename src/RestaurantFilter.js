@@ -3,9 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 class RestaurantFilter extends React.Component {
+
+    newRestaurant() {
+
+    }
+
     render(){
         return(
             <div className="rest-filter">
+                <button className="c-button" onClick={this.props.newrest} >+</button>
                 <span className="rating-filter"><FontAwesomeIcon icon={faStar} /></span>
                 <select>
                     <option>0</option>

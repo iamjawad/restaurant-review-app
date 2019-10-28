@@ -10,8 +10,10 @@ class GMap extends React.Component {
         super(props);
         this.success = this.success.bind(this);
         this.API = new APIKey();
+        this.map = null;
         this.state = {
-            currentLocation: 0
+            currentLocation: 0,
+            db: [...window.db]
         };
 
         //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
@@ -29,27 +31,90 @@ class GMap extends React.Component {
         script.addEventListener('load', () => {
             this.permission();
         });
+
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.db.length !== window.db.length) {
+            this.setState({db: this.props.db});
+            console.log(this.props.db);
+            console.log("Tooolo");
+            this.click();
+            // this.placeMarker();
+        }
+        console.log("Tooolo123");
+    }
+
+    static getDerivedStateFromProps(props, current_state) {
+        console.log("42342342343");
+        if (props.db.length !== current_state.db.length) {
+          return {
+            db: props.db,
+          }
+        }
+        return null
+      }
 
     createMap(position) {
-        let map = new window.google.maps.Map(this.mapeRef.current, 
+
+        let props = this.props;
+        window.gMap = new window.google.maps.Map(this.mapeRef.current, 
                                      {zoom: 4, center: position, mapTypeId: window.google.maps.MapTypeId.ROAD}
                                     );
-            window.gmap = map;
-        let marker = new window.google.maps.Marker({position: position, map: map});
-        this.placeMarkers(map);
+        this.map = window.gMap;
+        let marker = new window.google.maps.Marker({position: position, map: this.map});
 
+         //Add listener
+         window.google.maps.event.addListener(window.gMap, "click", function (event) {
+            let latitude = event.latLng.lat();
+            let longitude = event.latLng.lng();
+            let coords = [latitude, longitude];
+            console.log( latitude + ', ' + longitude );
+
+            let radius = new window.google.maps.Circle({map: this.map,
+                radius: 100,
+                center: event.latLng,
+                fillColor: '#777',
+                fillOpacity: 0.1,
+                strokeColor: '#AA0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                draggable: true,    // Dragable
+                editable: true      // Resizable
+            });
+
+            // Center of map
+            window.gMap.panTo(new window.google.maps.LatLng(latitude,longitude));
+            window.gCoords = coords;
+        }); //end addListener
+        
+        
+        this.placeMarkers();
+        this.setState({db: this.props.db});
     }
 
-    placeMarkers(map) {
+    placeMarkers() {
         for (var i = 0; i < window.db.length; i++) {
             var coords = window.db[i];
             var latLng = new window.google.maps.LatLng(coords.lat,coords.long);
             var marker = new window.google.maps.Marker({
             position: latLng,
-            map: map
+            map: this.map
             });
         }
+    }
+
+    click() {
+        alert("hello");
+    }
+
+    addMarker() {
+        var coords = window.db[window.db.length - 1];
+        var latLng = new window.google.maps.LatLng(coords.lat,coords.long);
+        var marker = new window.google.maps.Marker({
+        position: latLng,
+        map: this.map
+        });
     }
 
     permission(){
@@ -70,7 +135,6 @@ class GMap extends React.Component {
         return (
             <div>
                 <div id="map" ref={this.mapeRef} style={{width:"100%", height:"100%", backgroundColor:"grey", position: "absolute"}}></div>
-                <Sidebar />
             </div>
         );
     }

@@ -1,9 +1,10 @@
 import React from 'react';
 import Restaurant from './Restaurant';
 import RestaurantFilter from './RestaurantFilter';
-import * as data from './data.json';
+// import * as data from './data.json';
+import NewRestaurant from './NewRestaurant';
 
-window.db = data.default;
+// window.db = data.default;
 
 class RestaurantList extends React.Component {
 
@@ -11,7 +12,8 @@ class RestaurantList extends React.Component {
         super(props);
         this.state = {
             activeId:-1,
-            db: [...window.db]
+            db: [...window.db],
+            displayNewRest:false
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -50,6 +52,7 @@ class RestaurantList extends React.Component {
         this.setState({
             db: [...window.db]
         });
+        this.props.updateMap();
     }
 
     handleClick(id) {
@@ -60,7 +63,8 @@ class RestaurantList extends React.Component {
         const restaurants = this.props.children;
         return(
             <div className="">
-                <RestaurantFilter />
+                <RestaurantFilter newrest={() => this.setState({displayNewRest:!this.state.displayNewRest})}/>
+                <NewRestaurant coords={this.props.coords} toggle={() => this.setState({displayNewRest:!this.state.displayNewRest})} display={this.state.displayNewRest}  db={this.state.db} update={this.updateDb} />
                 <div className="restaurants">
                     {this.state.db.map((restaurant, i) => 
                         <Restaurant update={this.updateDb} key={i} selected={this.state.activeId} id={i} name={restaurant.restaurantName} address={restaurant.address} click={this.handleClick} reviews={restaurant.ratings} active={this.state.activeId}/>)}

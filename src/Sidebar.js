@@ -34,7 +34,7 @@ class Sidebar extends React.Component {
                 <header>
                     <div className="title">Restaurants Newarby</div>
                 </header>
-                <RestaurantList restaurants={this.restaurants} />
+                <RestaurantList coords={this.props.coords} updateMap={this.props.updateMap} restaurants={this.restaurants} />
 
             </div>
         );
