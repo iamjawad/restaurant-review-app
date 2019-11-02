@@ -1,6 +1,12 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHotel } from '@fortawesome/free-solid-svg-icons';
+import imgRestaurant from './images/restaurant.png';
+import DataContext from './contexts/DataContext';
 
 class NewRestaurant extends React.Component{
+
+    static contextType = DataContext;
     
     constructor(props) {
         super(props);
@@ -8,21 +14,21 @@ class NewRestaurant extends React.Component{
         this.state = {
 
             restaurant: {
+                "id":0,
                 "restaurantName":"",
                 "address":"",
                 "lat":0,
                 "long":0,
                 "ratings":[]
              }
-        }
-        // this.update = this.update.bind(this);
+        }        
     }
 
     update(property) {
 
         const prop = property;
-
-        if( typeof window.coords === 'undefined') {
+        let coords = window.gClickCoords;
+        if( typeof coords === 'undefined') {
             return false;
         }
 
@@ -31,17 +37,32 @@ class NewRestaurant extends React.Component{
                 restaurant: {
                     ...prevState.restaurant, 
                     ...prop,
-                    lat: window.gCoords[0],
-                    long: window.gCoords[1]
+                    lat: coords[0],
+                    long: coords[1]
                 }
             })
             )
     }
 
     saveRestaurant() {
-        window.db.push(this.state.restaurant);
+        const restaurantID = this.context.restaurants[this.context.restaurants.length-1].id + 1;
+        // restaurant.id = this.context.restaurants[this.context.restaurants.length -1].id + 1;
+        this.setState((prevState) => ({
+                                        restaurant: {
+                                            ...prevState.restaurant,
+                                            id:restaurantID
+                                        }}), 
+            () => {this.context.addRestaurant([this.state.restaurant]);
+                this.addMarker(window.gClickCoords);
+                this.resetState();
+            }
+        );
+    }
+
+    resetState() {
         this.setState({
             restaurant: {
+                "id":0,
                 "restaurantName":"",
                 "address":"",
                 "lat":0,
@@ -51,20 +72,13 @@ class NewRestaurant extends React.Component{
         });
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.db.length !== window.db.length) {
-            this.props.update();
-            this.addMarker();
-        }
-
-    }
-
-    addMarker() {
-        var coords = window.db[window.db.length - 1];
-        var latLng = new window.google.maps.LatLng(coords.lat,coords.long);
+    addMarker(coords) {
         var marker = new window.google.maps.Marker({
-        position: latLng,
-        map: window.gMap
+        position: window.gClickCoords,
+        map: window.gMap,
+        icon:{
+            url: imgRestaurant
+        }
         });
     }
 

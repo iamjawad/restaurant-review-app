@@ -2,8 +2,10 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar} from '@fortawesome/free-regular-svg-icons';
+import DataContext from './contexts/DataContext';
 
 class NewReview extends React.Component {
+    static contextType = DataContext;
 
     constructor(props) {
         super(props);
@@ -20,14 +22,15 @@ class NewReview extends React.Component {
             ratingInput:this.ratingInput,
             stars:0,
             comment:'',
-            db: [...this.props.db]
+            db: []
         }
     }
 
     saveReview() {
         
         let review  = {stars: this.state.stars, comment: this.state.comment};
-        window.db[this.props.id].ratings.push(review);
+
+        this.context.addRating(this.props.id, review);
 
         this.setState(state => {
             // const db = [...state.db, {stars: this.state.stars, comment: this.state.comment}];
@@ -35,7 +38,7 @@ class NewReview extends React.Component {
                 stars:0,
                 comment:'',
             };
-        },console.log(this.state.db));
+        });
 
         this.ratingInput.forEach(element => {
             element.icon = farStar;
@@ -43,13 +46,11 @@ class NewReview extends React.Component {
         
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.db.length !== window.db[this.props.id].ratings.length) {
-            this.setState({db: [...window.db[this.props.id].ratings]});
-            this.props.update();
-        }
-
-    }      
+    componentDidMount() {
+        this.setState({
+            db: this.context.restaurants.ratings
+        });
+    }    
 
     ratingInputClick(id) {
 

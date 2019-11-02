@@ -7,8 +7,11 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import Review from './Review';
 import NewReview from './NewReview';
+import DataContext from './contexts/DataContext';
 
 class Restaurant extends React.Component {
+
+    static contextType = DataContext;
 
     constructor(props) {
         super(props);
@@ -17,11 +20,17 @@ class Restaurant extends React.Component {
             active: false,
             selected: this.props.selected,
             avgRating: 0,
-            reviews: [this.props.reviews]
+            reviews: []
         }
         
         this.showDetails = this.showDetails.bind(this);
         this.updateReviews = this.updateReviews.bind(this);
+    }
+
+    componentDidMount() {
+        
+        // const reviews = this.context.getReviews(this.props.id);
+        this.setState({reviews: this.context.getReviews(this.props.id)});
     }
 
     showDetails(){
@@ -51,7 +60,7 @@ class Restaurant extends React.Component {
         // this.setState({
         //     reviews: [...updatedReviews]
         // });
-        this.setState({reviews: [...window.db[this.props.id].ratings]});
+        // this.setState({reviews: this.context.getReviews(this.props.id)});
         // this.props.update();
     }
 
@@ -106,9 +115,13 @@ class Restaurant extends React.Component {
                     <div className="detail-info" style={{display: this.props.selected === this.props.id && this.state.active ? "block" : "none"}}>
                         <div><span className="sectiong-title">Reviews</span></div><hr />
                         <NewReview id={this.props.id} update={this.updateReviews} db={this.props.reviews} />
-                        {this.props.reviews.map((review, i) => 
+                        <DataContext.Consumer>
+                        {context => (
+                            
+                            context.getReviews(this.props.id).map((review, i) => 
                             <Review key={i} stars={review.stars} comment={review.comment} ratingIcon={this.getStars}/>
-                        )}
+                         ))}
+                        </DataContext.Consumer>
                     </div>
                 </div>
             </div>
