@@ -2,6 +2,7 @@ import React from 'react';
 import APIKey from './APIKey.js'
 import imgRestaurant from './images/restaurant.png';
 import DataContext from './contexts/DataContext';
+import NewRestaurant from './NewRestaurant';
 
 class GMap extends React.Component {
     static contextType = DataContext;
@@ -14,7 +15,11 @@ class GMap extends React.Component {
         this.API = new APIKey();
         this.map = null;
         this.state = {
-            currentLocation: 0
+            currentLocation: 0,
+            newRestaurant:{
+                display: false,
+                position: 0
+            }
         };
 
         //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
@@ -197,6 +202,9 @@ class GMap extends React.Component {
             <div>
                 <div id="map" ref={this.mapeRef} style={{width:"100%", height:"100%", backgroundColor:"grey", position: "absolute"}}></div>
                 <button className="c-button" value="My Location" />
+                <div className="new-restaurant-popup" style={{ display: this.state.newRestaurant.display ? "block":"none"}}>
+                    <NewRestaurant style={{ top: this.state.newRestaurant.position[0], left: this.state.newRestaurant.position[1]}} display={this.state.newRestaurant.display} />
+                </div>
             </div>
         );
     }

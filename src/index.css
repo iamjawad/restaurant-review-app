@@ -204,3 +204,24 @@ input {
   margin-top: 10px;
 }
 
+.search-box {
+
+}
+
+.search-box .search-input{
+  width: 100%;
+  padding: 15px 28px;
+  border: 2px solid #e6e3e3;
+  border-left: none;
+  border-right: none;
+}
+
+.new-restaurant-popup {
+  z-index: 322;
+  position: absolute;
+  background: white;
+  width: 267px;
+  padding: 0px 0px 14px 0px;
+  border-radius: 12px;
+}
+

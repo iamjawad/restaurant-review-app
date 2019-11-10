@@ -4,8 +4,17 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 class RestaurantFilter extends React.Component {
 
-    newRestaurant() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            startRange:1,
+            endRange:5
+        }
+    }
 
+    getRange() {
+        const range = [this.state.startRange, this.state.endRange];
+        return range;
     }
 
     render(){
@@ -13,22 +22,20 @@ class RestaurantFilter extends React.Component {
             <div className="rest-filter">
                 <button className="c-button" onClick={this.props.newrest} >+</button>
                 <span className="rating-filter"><FontAwesomeIcon icon={faStar} /></span>
-                <select>
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                <select value={this.state.startRange} onChange={(e) => { this.setState({ startRange: parseInt(e.target.value) }, () => this.props.updateRange(this.getRange())); }}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
                 <span className="to-range">-</span>
-                <select>
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                <select value={this.state.endRange} onChange={(e) => { this.setState({ endRange: parseInt(e.target.value) }, () => this.props.updateRange(this.getRange()));}}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
             </div>
         );
