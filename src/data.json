@@ -62,6 +62,42 @@
  
        ]
  
+    },
+
+
+    
+    {
+       "id":3,
+       "restaurantName":"Sareena",
+ 
+       "address":"Quetta, Hali Road",
+ 
+       "lat":30.2043028,
+ 
+       "long":67.0122137,
+ 
+       "ratings":[
+ 
+          {
+ 
+             "stars":4,
+ 
+             "comment":"Its amazing!"
+ 
+          },
+ 
+          {
+ 
+             "stars":5,
+ 
+             "comment":"Great service."
+ 
+          }
+ 
+       ]
+ 
     }
+
+
  
  ]
